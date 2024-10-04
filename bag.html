@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Bag</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Header */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        /* Bag Container */
+        .bag-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .bag-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bag-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .item-info {
+            flex-grow: 2;
+        }
+
+        .item-info h4 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .item-info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .quantity-input {
+            width: 50px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .remove-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .remove-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Checkout Section */
+        .checkout-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .checkout-section h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: right;
+        }
+
+        .checkout-section .total-cost {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .checkout-btn {
+            display: block;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .checkout-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            width: 100%;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Your Shopping Bag</h1>
+    </header>
+
+    <div class="bag-container">
+        <h2>Items in your bag</h2>
+        <ul class="bag-items" id="bag-items">
+            <!-- Items will be injected here by JavaScript -->
+        </ul>
+
+        <!-- Checkout Section -->
+        <div class="checkout-section">
+            <div class="total-cost" id="total-cost">
+                <!-- Total will be displayed here -->
+            </div>
+            <a href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 E-Commerce Store. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Load the bag from localStorage and display it
+        const bagItemsList = document.getElementById('bag-items');
+        const totalCostElement = document.getElementById('total-cost');
+        let bag = JSON.parse(localStorage.getItem('bag')) || [];
+
+        function displayBagItems() {
+            bagItemsList.innerHTML = '';
+            let totalCost = 0;
+
+            if (bag.length === 0) {
+                bagItemsList.innerHTML = '<p>Your bag is empty.</p>';
+                totalCostElement.innerHTML = 'Total: ₹0';
+                return;
+            }
+
+            bag.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.className = 'bag-item';
+                li.innerHTML = `
+                    <div class="item-info">
+                        <h4>${item.title}</h4>
+                        <p>Price: ₹${item.price}</p>
+                    </div>
+                    <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-index="${index}">
+                    <button class="remove-btn" data-index="${index}">Remove</button>
+                `;
+                bagItemsList.appendChild(li);
+
+                totalCost += item.price * item.quantity;
+            });
+
+            totalCostElement.innerHTML = `Total: ₹${totalCost.toFixed(2)}`;
+
+            // Add event listeners for quantity change and removal
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.addEventListener('change', updateQuantity);
+            });
+
+            document.querySelectorAll('.remove-btn').forEach(button => {
+                button.addEventListener('click', removeItem);
+            });
+        }
+
+        // Update quantity of an item
+        function updateQuantity(event) {
+            const index = event.target.getAttribute('data-index');
+            const newQuantity = parseInt(event.target.value);
+            if (newQuantity > 0) {
+                bag[index].quantity = newQuantity;
+                localStorage.setItem('bag', JSON.stringify(bag));
+                displayBagItems();  // Re-render the bag
+            }
+        }
+
+        // Remove an item from the bag
+        function removeItem(event) {
+            const index = event.target.getAttribute('data-index');
+            bag.splice(index, 1);
+            localStorage.setItem('bag', JSON.stringify(bag));
+            displayBagItems();  // Re-render the bag
+        }
+
+        // Display the bag items on page load
+        displayBagItems();
+    </script>
+
+</body>
+</html>

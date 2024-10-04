@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Product Store</title>
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.filter {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.filter-btn {
+    margin: 0 10px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.filter-btn:hover {
+    background-color: #45a049;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.product {
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.product:hover {
+    transform: scale(1.05);
+}
+
+.product img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.add-to-bag {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.add-to-bag:hover {
+    background-color: #1976D2;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.filter-btn {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+    background-color: #b4e013; /* Default background color */
+    transition: background-color 0.3s;
+}
+
+.filter-btn.active {
+    background-color: #007bff; /* Color when active */
+    color: white; /* Text color when active */
+}
+</style>
+<body>
+    <header>
+        <header>
+            <div class="nav-container">
+                <h1 class="logo">E-Commerce</h1>
+                <nav>
+                    <ul>
+                        <li><a href="/index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-icons">
+                    <a href="profile.html"><img src="assets/images/profile-icon.webp" alt="Profile" class="icon"></a>
+                    <a href="bag.html"><img src="assets/images/bag-icon.gif" alt="Bag" class="icon"> <span id="bag-count">0</span></a>
+                </div>
+            </div>
+        </header>
+        <h1>Product</h1>
+        <div>
+            Products in Bag: <span id="bag-count">0</span>
+        </div>
+    </header>
+
+
+    <div class="filter">
+        <button class="filter-btn" data-category="all">All</button>
+        <button class="filter-btn" data-category="women">Women’s</button>
+        <button class="filter-btn" data-category="men">Men’s</button>
+        <button class="filter-btn" data-category="kids">Kids</button>
+    </div>
+
+    <div class="product-grid">
+        <!-- Kids Products -->
+        <div class="product kids" data-price="15.00">
+            <img src="https://www.photoland.in/wp-content/uploads/2022/06/Boy-Girl-5-600x600.jpg">
+            <h3 class="product-title">Kids T-Shirt</h3>
+            <p class="product-description">Fun and colorful t-shirt for kids.</p>
+            <p class="product-price">₹ 152.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product kids" data-price="20.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1y_NDLK6jxeYKHMaLjp1oPY3ZKgTopc7dLA&s" alt="Kids Jeans">
+            <h3 class="product-title">Kids Jeans</h3>
+            <p class="product-description">Stylish denim jeans for children.</p>
+            <p class="product-price">₹ 499.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product kids" data-price="18.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfZsuMuxlXmio6iwusmgOo4tm6kByTOa22HQ&s" alt="Kids Jacket">
+            <h3 class="product-title"> Kids Jacket </h3>
+            <p class="product-description">Warm and cozy jacket for cold days.</p>
+            <p class="product-price">₹ 339.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product kids" data-price="12.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcn9-nFregKJd-5SPK5MMAfnwDmLvT9b1T2g&s" alt="Kids Cap">
+            <h3 class="product-title">Kids Cap</h3>
+            <p class="product-description">Fun cap to protect from the sun.</p>
+            <p class="product-price">₹ 99.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class= "product kids" data-price="14.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT81I_4o85u0oMOP8Vb1evrsGBNWuAQf66wpA&s" alt="Kids Sweater">
+            <h3 class="product-title">Kids Sweater</h3>
+            <p class="product-description">Cozy sweater for chilly weather.</p>
+            <p class="product-price">₹ 549.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product kids" data-price="16.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShupHpC1AVji4quz-sSF_UHEmnNPSUpCifWQ&s" alt="Kids Shorts">
+            <h3 class="product-title">Kids Shorts</h3>
+            <p class="product-description">Perfect for summer playtime.</p>
+            <p class="product-price">₹ 199.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product kids" data-price="22.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvJO6g7H-ce8sslmmBDNzu4NdgLzcPC6tCAw&s" alt="Kids Overalls">
+            <h3 class="product-title">Kids Overalls</h3>
+            <p class="product-description">Fun overalls for active kids.</p>
+            <p class="product-price">₹ 699.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product kids" data-price="10.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKtS4oi42DlJ6YdQiDLCpbsg_shgXu5C7XFQ&s" alt="Kids Socks">
+            <h3 class="product-title">Kids Socks</h3>
+            <p class="product-description">Bright and colorful socks.</p>
+            <p class="product-price">₹ 49.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product kids" data-price="24.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5PlNG-VcRqA0IN1Y8rGjuHM27J4EVGlqa3Q&s" alt="Kids Pajamas">
+            <h3 class="product-title">Kids Pajamas</h3>
+            <p class="product-description">Soft and comfortable pajamas.</p>
+            <p class="product-price">₹ 789.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product kids" data-price="19.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKmT-EZR9bXOjXlhK_07TZqi7o2R1H2mvcyA&s" alt="Kids Swimwear">
+            <h3 class="product-title">Kids Swimwear</h3>
+            <p class="product-description">Fun swimwear for the beach.</p>
+            <p class="product-price">₹ 575.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+
+        <!-- Women’s Products -->
+        <div class="product women" data-price="30.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-2Dvl9ugYh0Hm93lqQ20Y_1-fAsnnRyBjxA&s" alt="Women Dress">
+            <h3 class="product-title">Summer Dress</h3>
+            <p class="product-description">Light and breezy dress for summer.</p>
+            <p class="product-price">₹ 649.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product women" data-price="25.00">
+            <img src="https://m.media-amazon.com/images/I/91ENaM7CrUL._AC_UY1100_.jpg" alt="Women Blouse">
+            <h3 class="product-title">Elegant Blouse</h3>
+            <p class="product-description">Perfect for work or casual outings.</p>
+            <p class="product-price">₹ 535.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product women" data-price="40.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSyON06wtJMQhjNwkylRVQH3LbD2Mb6u1MuQ&s" alt="Women Skirt">
+            <h3 class="product-title">Chic Skirt</h3>
+            <p class="product-description">Trendy skirt for stylish outfits.</p>
+            <p class="product-price">₹ 399.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product women" data-price="22.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYMxBJx8uBp5TaAk6PNqWFqjN8PcFOVBmIJQ&s" alt="Women Cardigan">
+            <h3 class="product-title">Cozy Cardigan</h3>
+            <p class="product-description">Warm cardigan for chilly days.</p>
+            <p class="product-price">₹ 899.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product women" data-price="35.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlBxg5N2xOyJqtlijezGITpC5Iu0jmR3rGYQ&s" alt="Women Trousers">
+            <h3 class="product-title">Smart Trousers</h3>
+            <p class="product-description">Perfect for the office.</p>
+            <p class="product-price">$ 297.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product women" data-price="28.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKFbr7Un0XUkI5dWzFqH9cn7SiuQs8k5XgWw&s" alt="Women Coat">
+            <h3 class="product-title">Stylish Coat</h3>
+            <p class="product-description">Trendy coat for winter.</p>
+            <p class="product-price">₹ 3945.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product women" data-price="32.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqy4rwYKNuH3sjJ9urQ0KHI6V9LoD_eSoQkg&s" alt="Women Top">
+            <h3 class="product-title">Casual Top</h3>
+            <p class="product-description">Comfortable top for everyday wear.</p>
+            <p class="product-price">₹ 696.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product women" data-price="29.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Gwhw7fm1GSA1egJbcJz2ot5Ah53-FCdskg&s" alt="Women Jacket">
+            <h3 class="product-title">Leather Jacket</h3>
+            <p class="product-description">Stylish leather jacket for a chic look.</p>
+            <p class="product-price">₹ 1599.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product women" data-price="45.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbCPPT54Dci8V-orl9O3_UxrvcxdtXRDdl-g&s" alt="Women Shoes">
+            <h3 class="product-title">Elegant Shoes</h3>
+            <p class="product-description">Perfect for any occasion.</p>
+            <p class="product-price">₹ 2499.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+
+        <!-- Men’s Products -->
+        <div class="product men" data-price="40.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-ZNpb2VklnZsasdp_dZZRSm4K3-_UjSyhRQ&s" alt="Men Shirt">
+            <h3 class="product-title">Casual Shirt</h3>
+            <p class="product-description">Stylish and comfortable casual shirt.</p>
+            <p class="product-price">₹ 576.78</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product men" data-price="35.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLuVxEHX0KIqxksWk5R2XFeZgwDA6sZxyzoQ&s" alt="Men Pants">
+            <h3 class="product-title">Comfortable Pants</h3>
+            <p class="product-description">Perfect fit for all-day wear.</p>
+            <p class="product-price">₹ 299.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product men" data-price="50.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUdGBJNVWIZV2CQ1npvY-O8xhJQsI6jo6yjQ&s" alt="Men Suit">
+            <h3 class="product-title">Formal Suit</h3>
+            <p class="product-description">Perfect for weddings and formal events.</p>
+            <p class="product-price">₹ 4599.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product men" data-price="45.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPzT45e9YiK4Md5yakOvhX9_8AWpjLF7GNmw&s" alt="Men Jacket">
+            <h3 class="product-title">Leather Jacket</h3>
+            <p class="product-description">Stylish leather jacket for a rugged look.</p>
+            <p class="product-price">₹ 1499.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product men" data-price="38.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLPLl1Dwsc5CxU-JA9AbJ5JUDUuio9IW08LQ&s" alt="Men Shorts">
+            <h3 class="product-title">Casual Shorts</h3>
+            <p class="product-description">Comfortable shorts for summer.</p>
+            <p class="product-price">₹ 459.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product men" data-price="28.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkUJNqTZqaojvsKFZyI_dCjZfBwx6fYQwijA&s" alt="Men T-Shirt">
+            <h3 class="product-title">Basic T-Shirt</h3>
+            <p class="product-description">Essential t-shirt for everyday wear.</p>
+            <p class="product-price">₹ 661.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product men" data-price="55.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIhKrqooLWI6ifaKKI23gxYQW1v0Tk60uXEg&s" alt="Men Shoes">
+            <h3 class="product-title">Formal Shoes</h3>
+            <p class="product-description">Dress shoes for any occasion.</p>
+            <p class="product-price">₹ 599.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product men" data-price="20.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkYIK5WsBbw6FH8DAstuKuptUgK1kyEkL71g&s" alt="Men Cap">
+            <h3 class="product-title">Casual Cap</h3>
+            <p class="product-description">Stylish cap for a sunny day.</p>
+            <p class="product-price">₹ 209.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+        <div class="product men" data-price="42.00">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8qcGEzoHU50XEH6zkbhWV2-nkSXlz4egrg&s" alt="Men Sweater">
+            <h3 class="product-title">Warm Sweater</h3>
+            <p class="product-description">Cozy sweater for winter.</p>
+            <p class="product-price">₹ 549.00</p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+    </div>
+
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img src="" alt="Product Image" id="modal-image">
+            <h3 id="modal-title"></h3>
+            <p id="modal-description"></p>
+            <p id="modal-price"></p>
+            <button class="add-to-bag">Add to Bag</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

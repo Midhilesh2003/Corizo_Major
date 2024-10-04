@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile | E-Commerce</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Header */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        /* Profile Section */
+        .profile-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-header h2 {
+            margin: 0;
+            font-size: 28px;
+            color: #333;
+        }
+
+        .profile-info {
+            margin-top: 20px;
+        }
+
+        .profile-info p {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        /* Form Styles */
+        .update-form {
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .update-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .update-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Order History */
+        .order-history {
+            margin-top: 40px;
+        }
+
+        .order-history h3 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .order-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .order-list li {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .order-list li span {
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        .header-icons {
+        display: flex;
+        align-items: center;
+}
+
+.icon {
+    width: 30px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <h1 class="logo">E-Commerce</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-icons">
+                <a href="profile.html"><img src="assets/images/profile-icon.webp" alt="Profile" class="icon"></a>
+                <a href="bag.html"><img src="assets/images/bag-icon.gif" alt="Bag" class="icon"> <span id="bag-count">0</span></a>
+            </div>
+        </div>
+        <h1>User Profile</h1>
+    </header>
+
+    <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <h2>John Doe</h2>
+            <button class="update-btn" onclick="editProfile()">Edit Profile</button>
+        </div>
+
+        <!-- Profile Information -->
+        <div class="profile-info" id="profile-info">
+            <p><strong>Email:</strong> johndoe@example.com</p>
+            <p><strong>Phone:</strong> +91 9876543210</p>
+            <p><strong>Address:</strong> 123, Main Street, City, Country</p>
+        </div>
+
+        <!-- Update Form (Initially Hidden) -->
+        <div class="update-form" id="update-form" style="display:none;">
+            <form id="profile-update-form">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" value="johndoe@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" id="phone" value="+91 9876543210" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea id="address" required>123, Main Street, City, Country</textarea>
+                </div>
+                <button type="button" class="update-btn" onclick="saveProfile()">Save Changes</button>
+            </form>
+        </div>
+
+        <!-- Order History -->
+        <div class="order-history">
+            <h3>Order History</h3>
+            <ul class="order-list">
+                <li>Order #12345 - <span>Status:</span> Delivered</li>
+                <li>Order #23456 - <span>Status:</span> In Transit</li>
+                <li>Order #34567 - <span>Status:</span> Processing</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 E-Commerce Store. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function editProfile() {
+            // Toggle display between profile info and update form
+            document.getElementById('profile-info').style.display = 'none';
+            document.getElementById('update-form').style.display = 'block';
+        }
+
+        function saveProfile() {
+            // Get the updated values
+            var email = document.getElementById('email').value;
+            var phone = document.getElementById('phone').value;
+            var address = document.getElementById('address').value;
+
+            // Update the profile information
+            document.getElementById('profile-info').innerHTML = `
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone}</p>
+                <p><strong>Address:</strong> ${address}</p>
+            `;
+
+            // Hide the form and show the updated profile info
+            document.getElementById('profile-info').style.display = 'block';
+            document.getElementById('update-form').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
