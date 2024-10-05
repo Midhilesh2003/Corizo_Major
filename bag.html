@@ -1,233 +1,301 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Bag</title>
+    <link rel="stylesheet" href="addtocart.css">
+    <script src="https://kit.fontawesome.com/92d70a2fd8.js" crossorigin="anonymous"></script>
     <style>
-        /* General Styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+       * {
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+           font-family: 'poppins', sans-serif;
+           font-size: 18px;
+       }
+       body {
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           flex-direction: column;
+       }
+       .header {
+           height: 80px;
+           width: 70%;
+           background-color: rgb(32, 218, 41);
+           border-radius: 3px;
+           margin: 30px 0px;
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+           padding: 15px;
+       }
+       .header .logo {
+           font-size: 30px;
+           font-weight: bold;
+           color: white;
+       }
+       .cart {
+           display: flex;
+           background-color: white;
+           justify-content: space-between;
+           align-items: center;
+           padding: 7px 10px;
+           border-radius: 3px;
+           width: 80px;
+       }
+       .fa-solid {
+           color: rgb(32, 218, 41);
+       }
+       .cart p {
+           height: 22px;
+           width: 22px;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           border-radius: 22px;
+           background-color: rgb(32, 218, 41);
+           color: white;
+       }
+       .container {
+           display: flex;
+           width: 70%;
+           margin-bottom: 30px;
+       }
+       #root {
+           width: 60%;
+           display: grid;
+           grid-template-columns: repeat(2, 1fr);
+           grid-gap: 20px;
+       }
+       .sidebar {
+           width: 40%;
+           border-radius: 5px;
+           background-color: #eee;
+           margin-left: 20px;
+           padding: 15px;
+           text-align: center;
+       }
+       .head {
+           background-color: rgb(32, 218, 41);
+           border-radius: 3px;
+           height: 40px;
+           padding: 10px;
+           margin-bottom: 20px;
+           color: white;
+           display: flex;
+           align-items: center;
+       }
+       .foot {
+           display: flex;
+           justify-content: space-between;
+           margin: 20px 0px;
+           padding: 10px 0px;
+           border-top: 1px solid #333;
+           flex-direction: column;
+       }
+       .box {
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           justify-content: space-between;
+           border: 1px solid rgb(32, 218, 41);
+           border-radius: 5px;
+           padding: 15px;
+       }
+       .img-box {
+           width: 100%;
+           height: 180px;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+       }
+       .images {
+           max-width: 90%;
+           max-height: 90%;
+           object-fit: cover;
+           object-position: center;
+       }
+       .bottom {
+           margin-top: 20px;
+           width: 100%;
+           text-align: center;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           justify-content: space-between;
+           height: 110px;
+       }
+       h2 {
+           font-size: 20px;
+           color: rgb(8, 8, 8);
+       }
+       button {
+           width: 100%;
+           position: relative;
+           border: none;
+           border-radius: 5px;
+           background-color: rgb(32, 218, 41);
+           padding: 7px 25px;
+           cursor: pointer;
+           color: white;
+       }
+       button:hover {
+           background-color: #333;
+       }
+       .cart-item {
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+           padding: 10px;
+           background-color: white;
+           border-bottom: 1px solid #aaa;
+           border-radius: 3px;
+           margin: 10px 10px;
+       }
+       .row-img {
+           width: 50px;
+           height: 50px;
+           border-radius: 50px;
+           border: 1px solid rgb(32, 218, 41);
+           display: flex;
+           align-items: center;
+           justify-content: center;
+       }
+       .rowimg {
+           max-width: 43px;
+           max-height: 43px;
+           border-radius: 50%;
+       }
+       .fa-trash:hover {
+           cursor: pointer;
+           color: #333;
+       }
 
-        /* Header */
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-        }
-
-        /* Bag Container */
-        .bag-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .bag-items {
-            list-style: none;
-            padding: 0;
-        }
-
-        .bag-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-
-        .item-info {
-            flex-grow: 2;
-        }
-
-        .item-info h4 {
-            margin: 0;
-            font-size: 18px;
-        }
-
-        .item-info p {
-            margin: 5px 0;
-            font-size: 14px;
-            color: #555;
-        }
-
-        .quantity-input {
-            width: 50px;
-            padding: 5px;
-            margin-right: 10px;
-        }
-
-        .remove-btn {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .remove-btn:hover {
-            background-color: #d32f2f;
-        }
-
-        /* Checkout Section */
-        .checkout-section {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .checkout-section h3 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            text-align: right;
-        }
-
-        .checkout-section .total-cost {
-            font-size: 20px;
-            font-weight: bold;
-            text-align: right;
-            margin-bottom: 20px;
-        }
-
-        .checkout-btn {
-            display: block;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 12px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-
-        .checkout-btn:hover {
-            background-color: #45a049;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            position: relative;
-            width: 100%;
-            margin-top: 50px;
-        }
+       .checkout-btn {
+           background-color: rgb(32, 218, 41);
+           color: white;
+           padding: 10px;
+           border: none;
+           border-radius: 5px;
+           cursor: pointer;
+           margin-top: 20px;
+       }
+       .checkout-btn:hover {
+           background-color: #333;
+       }
     </style>
 </head>
 <body>
-
-    <header>
-        <h1>Your Shopping Bag</h1>
-    </header>
-
-    <div class="bag-container">
-        <h2>Items in your bag</h2>
-        <ul class="bag-items" id="bag-items">
-            <!-- Items will be injected here by JavaScript -->
-        </ul>
-
-        <!-- Checkout Section -->
-        <div class="checkout-section">
-            <div class="total-cost" id="total-cost">
-                <!-- Total will be displayed here -->
-            </div>
-            <a href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
+    <div class="header">
+        <p class="logo">LOGO</p>
+        <div class="cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <p id="count">0</p>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2024 E-Commerce Store. All Rights Reserved.</p>
-    </footer>
+    <div class="container">
+        <div id="root"></div>
+        <div class="sidebar">
+            <div class="head"><p>My Bag</p></div>
+            <div id="bagItem">Your bag is empty</div>
+            <div class="foot">
+                <h3>Total</h3>
+                <h2 id="total">₹ 0.00</h2>
+                <!-- Proceed to Checkout Button -->
+                <button class="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // Load the bag from localStorage and display it
-        const bagItemsList = document.getElementById('bag-items');
-        const totalCostElement = document.getElementById('total-cost');
+        const product = [
+            { id: 0, image: 'image/gg-1.jpg', title: 'Half Sleeve Shirt', price: 350 },
+            { id: 1, image: 'image/hh-2.jpg', title: 'Zara White Shirt', price: 400 },
+            { id: 2, image: 'image/ee-3.jpg', title: 'Formal Coat', price: 999 },
+            { id: 3, image: 'image/aa-1.jpg', title: 'Black Shirt', price: 350 }
+        ];
+
+        const categories = [...new Set(product.map(item => item))];
+        let i = 0;
+
+        // Load saved bag from localStorage
         let bag = JSON.parse(localStorage.getItem('bag')) || [];
 
-        function displayBagItems() {
-            bagItemsList.innerHTML = '';
-            let totalCost = 0;
+        document.getElementById('root').innerHTML = categories.map(item => {
+            var { image, title, price } = item;
+            return (
+                `<div class='box'>
+                    <div class='img-box'>
+                        <img class='images' src=${image}></img>
+                    </div>
+                    <div class='bottom'>
+                        <p>${title}</p>
+                        <h2>₹ ${price}.00</h2>` +
+                "<button onclick='addtobag(" + (i++) + ")'>Add to bag</button>" +
+                `</div>
+                </div>`
+            );
+        }).join('');
+
+        function addtobag(a) {
+            const itemInBag = bag.find(item => item.id === categories[a].id);
+            if (itemInBag) {
+                itemInBag.quantity += 1;  // If item already exists in bag, increment quantity
+            } else {
+                bag.push({ ...categories[a], quantity: 1 });  // Add new item with quantity = 1
+            }
+            localStorage.setItem('bag', JSON.stringify(bag));  // Save updated bag to localStorage
+            displaybag();
+        }
+
+        function delElement(index) {
+            bag.splice(index, 1);  // Remove item at the given index
+            localStorage.setItem('bag', JSON.stringify(bag));  // Update localStorage
+            displaybag();
+        }
+
+        function displaybag() {
+            let total = 0;
+            document.getElementById("count").innerHTML = bag.length;
 
             if (bag.length === 0) {
-                bagItemsList.innerHTML = '<p>Your bag is empty.</p>';
-                totalCostElement.innerHTML = 'Total: ₹0';
+                document.getElementById('bagItem').innerHTML = "Your bag is empty";
+                document.getElementById("total").innerHTML = "₹ 0.00";
                 return;
             }
 
-            bag.forEach((item, index) => {
-                const li = document.createElement('li');
-                li.className = 'bag-item';
-                li.innerHTML = `
-                    <div class="item-info">
-                        <h4>${item.title}</h4>
-                        <p>Price: ₹${item.price}</p>
-                    </div>
-                    <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-index="${index}">
-                    <button class="remove-btn" data-index="${index}">Remove</button>
-                `;
-                bagItemsList.appendChild(li);
-
-                totalCost += item.price * item.quantity;
-            });
-
-            totalCostElement.innerHTML = `Total: ₹${totalCost.toFixed(2)}`;
-
-            // Add event listeners for quantity change and removal
-            document.querySelectorAll('.quantity-input').forEach(input => {
-                input.addEventListener('change', updateQuantity);
-            });
-
-            document.querySelectorAll('.remove-btn').forEach(button => {
-                button.addEventListener('click', removeItem);
-            });
+            document.getElementById('bagItem').innerHTML = bag.map((item, index) => {
+                var { image, title, price, quantity } = item;
+                total += price * quantity;
+                document.getElementById("total").innerHTML = "₹ " + total.toFixed(2);
+                return (
+                    `<div class='cart-item'>
+                        <div class='row-img'>
+                            <img class='rowimg' src=${image}>
+                        </div>
+                        <p style='font-size:12px;'>${title}</p>
+                        <h2 style='font-size: 15px;'>₹ ${price}.00</h2>
+                        <input type='number' value='${quantity}' min='1' onchange='updateQuantity(${index}, this.value)' />
+                        <i class='fa-solid fa-trash' onclick='delElement(${index})'></i>
+                    </div>`
+                );
+            }).join('');
         }
 
-        // Update quantity of an item
-        function updateQuantity(event) {
-            const index = event.target.getAttribute('data-index');
-            const newQuantity = parseInt(event.target.value);
-            if (newQuantity > 0) {
-                bag[index].quantity = newQuantity;
-                localStorage.setItem('bag', JSON.stringify(bag));
-                displayBagItems();  // Re-render the bag
+        function updateQuantity(index, quantity) {
+            if (quantity > 0) {
+                bag[index].quantity = parseInt(quantity);
+                localStorage.setItem('bag', JSON.stringify(bag));  // Update localStorage
+                displaybag();  // Re-render bag after updating quantity
             }
         }
 
-        // Remove an item from the bag
-        function removeItem(event) {
-            const index = event.target.getAttribute('data-index');
-            bag.splice(index, 1);
-            localStorage.setItem('bag', JSON.stringify(bag));
-            displayBagItems();  // Re-render the bag
+        function proceedToCheckout() {
+            window.location.href = "checkout.html";  // Redirect to checkout page
         }
 
-        // Display the bag items on page load
-        displayBagItems();
+        // Initial call to display bag on page load
+        displaybag();
     </script>
-
 </body>
 </html>
