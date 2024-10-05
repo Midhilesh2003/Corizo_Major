@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Fashion E-Commerce</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url('https://cdn.pixabay.com/photo/2016/12/07/09/31/coffee-1885052_1280.jpg'); /* Fashion-related background */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay for contrast */
+        }
+
+        .signup-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .btn-custom {
+            background-color: #28a745; /* Green button */
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #218838;
+        }
+
+        .custom-link {
+            color: #9c27b0;
+            text-decoration: none;
+        }
+
+        .custom-link:hover {
+            color: #ab47bc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div> <!-- Semi-transparent overlay -->
+
+    <!-- Main Container (Centered Form) -->
+    <div class="d-flex justify-content-center align-items-center min-vh-100 position-relative">
+        <div class="signup-card">
+            <h3 class="text-center font-bold mb-4">Create an Account</h3>
+            <p class="text-center text-muted mb-4">Sign up to start shopping the latest trends.</p>
+
+            <form id="signupForm">
+                <!-- Name -->
+                <div class="form-group mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" id="name" name="name" class="form-control border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Enter your full name" required>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" id="email" name="email" class="form-control border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Enter your email" required>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-control border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Enter your password" required>
+                </div>
+
+                <!-- Sign Up Button -->
+                <div class="form-group d-grid mb-3">
+                    <button type="submit" class="btn btn-custom py-2 rounded">Sign Up</button>
+                </div>
+
+                <!-- Already have an account? -->
+                <div class="text-center">
+                    <a href="signin.html" class="custom-link">Already have an account? Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const signupForm = document.getElementById('signupForm');
+
+        signupForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+        
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+        
+            try {
+                const response = await fetch('http://localhost:5000/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, email, password }),
+                });
+        
+                const data = await response.json();
+                if (response.status === 201) {
+                    alert('Account created successfully');
+                    window.location.href = 'signin.html'; // Redirect to Sign In page after sign up
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+        
+    </script>
+</body>
+</html>
